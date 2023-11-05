@@ -1,7 +1,9 @@
 // the Uniswap Default token list lives here
 // export const DEFAULT_TOKEN_LIST_URL = 'tokens.uniswap.eth'
-export const DEFAULT_TOKEN_LIST_URL = 'https://app.tryroll.com/tokens.json'
-// import okbtokenlist from './tokenlist.json'
+// export const DEFAULT_TOKEN_LIST_URL = 'https://app.tryroll.com/tokens.json'
+export const DEFAULT_TOKEN_LIST_URL = ''
+import TOKENLIST from './tokenlist.json'
+
 
 // const tokenlist = okbtokenlist+"";
 // 这是token 列表  需要做一个自己的token list

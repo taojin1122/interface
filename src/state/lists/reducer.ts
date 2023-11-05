@@ -5,7 +5,23 @@ import { DEFAULT_LIST_OF_LISTS, DEFAULT_TOKEN_LIST_URL } from '../../constants/l
 import { updateVersion } from '../global/actions'
 import { acceptListUpdate, addList, fetchTokenList, removeList, selectList } from './actions'
 import UNISWAP_DEFAULT_LIST from '@uniswap/default-token-list'
+/**
+ * 
+ * 定义了一个名为ListsState的接口（interface），它描述了应用程序状态的一部分结构
+ * 
+ * byUrl: 这是一个对象（dictionary），它使用URL字符串作为键，对应的值是一个包含以下字段的对象：
+    current: 表示当前的TokenList或者是null。
+    pendingUpdate: 表示即将更新的TokenList或者是null。
+    loadingRequestId: 表示加载请求的唯一标识符，通常是字符串或null。
+    error: 表示错误消息的字符串或null。
 
+
+    lastInitializedDefaultListOfLists: 这是一个字符串数组，它包含了最后一次updateVersion函数被调用时初始化的默认列表。
+    通常，它包含了应用程序重新加载时的默认列表的URL。
+
+    selectedListUrl: 这是一个字符串或undefined。它表示当前选中的列表的URL。
+    通常用来标识用户选择的哪个列表是活动列表。
+ */
 export interface ListsState {
   readonly byUrl: {
     readonly [url: string]: {
@@ -28,7 +44,7 @@ const NEW_LIST_STATE: ListsState['byUrl'][string] = {
 }
 
 type Mutable<T> = { -readonly [P in keyof T]: T[P] extends ReadonlyArray<infer U> ? U[] : T[P] }
-
+// 创建一个 initialState的初始状态对象 
 const initialState: ListsState = {
   lastInitializedDefaultListOfLists: DEFAULT_LIST_OF_LISTS,
   byUrl: {
@@ -45,7 +61,8 @@ const initialState: ListsState = {
   },
   selectedListUrl: undefined
 }
-
+// 使用createReducer创建Reducer
+// Reducer 管理应用程序的状态（state）变化
 export default createReducer(initialState, builder =>
   builder
     .addCase(fetchTokenList.pending, (state, { payload: { requestId, url } }) => {
