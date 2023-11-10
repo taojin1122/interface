@@ -19,6 +19,8 @@ export type PopupContent =
     }
 
 export const updateBlockNumber = createAction<{ chainId: number; blockNumber: number }>('app/updateBlockNumber')
+
+// 导出一个toggleWalletModal的常量，它是一个createAction<void>类型的常量 创建一个名为app/toggleWalletModal 的 action 函数，
 export const toggleWalletModal = createAction<void>('app/toggleWalletModal')
 export const toggleSettingsMenu = createAction<void>('app/toggleSettingsMenu')
 export const addPopup = createAction<{ key?: string; removeAfterMs?: number | null; content: PopupContent }>(

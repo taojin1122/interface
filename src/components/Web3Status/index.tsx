@@ -5,11 +5,12 @@ import React, { useMemo } from 'react'
 import { Activity } from 'react-feather'
 import { useTranslation } from 'react-i18next'
 import styled, { css } from 'styled-components'
-import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
-import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
-import PortisIcon from '../../assets/images/portisIcon.png'
-import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
-import { fortmatic, injected, portis, walletconnect, walletlink } from '../../connectors'
+// import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
+// import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
+// import PortisIcon from '../../assets/images/portisIcon.png'
+// import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
+// import { fortmatic, injected, portis, walletconnect, walletlink } from '../../connectors'
+import {injected } from '../../connectors'
 import { NetworkContextName } from '../../constants'
 import useENSName from '../../hooks/useENSName'
 import { useHasSocks } from '../../hooks/useSocksBalance'
@@ -25,15 +26,15 @@ import Loader from '../Loader'
 import { RowBetween } from '../Row'
 import WalletModal from '../WalletModal'
 
-const IconWrapper = styled.div<{ size?: number }>`
-  ${({ theme }) => theme.flexColumnNoWrap};
-  align-items: center;
-  justify-content: center;
-  & > * {
-    height: ${({ size }) => (size ? size + 'px' : '32px')};
-    width: ${({ size }) => (size ? size + 'px' : '32px')};
-  }
-`
+// const IconWrapper = styled.div<{ size?: number }>`
+//   ${({ theme }) => theme.flexColumnNoWrap};
+//   align-items: center;
+//   justify-content: center;
+//   & > * {
+//     height: ${({ size }) => (size ? size + 'px' : '32px')};
+//     width: ${({ size }) => (size ? size + 'px' : '32px')};
+//   }
+// `
 
 const Web3StatusGeneric = styled(ButtonSecondary)`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -133,38 +134,45 @@ const SOCK = (
 function StatusIcon({ connector }: { connector: AbstractConnector }) {
   if (connector === injected) {
     return <Identicon />
-  } else if (connector === walletconnect) {
-    return (
-      <IconWrapper size={16}>
-        <img src={WalletConnectIcon} alt={''} />
-      </IconWrapper>
-    )
-  } else if (connector === walletlink) {
-    return (
-      <IconWrapper size={16}>
-        <img src={CoinbaseWalletIcon} alt={''} />
-      </IconWrapper>
-    )
-  } else if (connector === fortmatic) {
-    return (
-      <IconWrapper size={16}>
-        <img src={FortmaticIcon} alt={''} />
-      </IconWrapper>
-    )
-  } else if (connector === portis) {
-    return (
-      <IconWrapper size={16}>
-        <img src={PortisIcon} alt={''} />
-      </IconWrapper>
-    )
-  }
+  } 
+  // else if (connector === walletconnect) {
+  //   return (
+  //     <IconWrapper size={16}>
+  //       <img src={WalletConnectIcon} alt={''} />
+  //     </IconWrapper>
+  //   )
+  // } 
+  // else if (connector === walletlink) {
+  //   return (
+  //     <IconWrapper size={16}>
+  //       <img src={CoinbaseWalletIcon} alt={''} />
+  //     </IconWrapper>
+  //   )
+  // } 
+  // else if (connector === fortmatic) {
+  //   return (
+  //     <IconWrapper size={16}>
+  //       <img src={FortmaticIcon} alt={''} />
+  //     </IconWrapper>
+  //   )
+  // } 
+  // else if (connector === portis) {
+  //   return (
+  //     <IconWrapper size={16}>
+  //       <img src={PortisIcon} alt={''} />
+  //     </IconWrapper>
+  //   )
+  // }
   return null
 }
-
+// 钱包状态 组件
 function Web3StatusInner() {
+  // 翻译组件
   const { t } = useTranslation()
   const { account, connector, error } = useWeb3React()
-
+  console.log(account, "钱包地址")
+  console.log(connector, "连接器")
+  console.log(error, "错误信息")
   const { ENSName } = useENSName(account ?? undefined)
 
   const allTransactions = useAllTransactions()
@@ -178,10 +186,13 @@ function Web3StatusInner() {
 
   const hasPendingTransactions = !!pending.length
   const hasSocks = useHasSocks()
+  // 调用钱包组件  src/components/Modal.tsx
   const toggleWalletModal = useWalletModalToggle()
+  console.log(toggleWalletModal, "切换钱包事件")
 
   if (account) {
     return (
+      // 钱包连接成功 显示钱包余额组件
       <Web3StatusConnected id="web3-status-connected" onClick={toggleWalletModal} pending={hasPendingTransactions}>
         {hasPendingTransactions ? (
           <RowBetween>
@@ -198,6 +209,7 @@ function Web3StatusInner() {
     )
   } else if (error) {
     return (
+      // 连接错误 提示组件
       <Web3StatusError onClick={toggleWalletModal}>
         <NetworkIcon />
         <Text>{error instanceof UnsupportedChainIdError ? 'Wrong Network' : 'Error'}</Text>
@@ -205,6 +217,7 @@ function Web3StatusInner() {
     )
   } else {
     return (
+      // 连接钱包组件  
       <Web3StatusConnect id="connect-wallet" onClick={toggleWalletModal} faded={!account}>
         <Text>{t('Connect to a wallet')}</Text>
       </Web3StatusConnect>

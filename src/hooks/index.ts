@@ -8,6 +8,7 @@ import { injected } from '../connectors'
 import { NetworkContextName } from '../constants'
 
 export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> & { chainId?: ChainId } {
+  // 使用 React Hooks 中的 useWeb3ReactCore Hook 来获取 Web3Provider 的上下文对象。
   const context = useWeb3ReactCore<Web3Provider>()
   const contextNetwork = useWeb3ReactCore<Web3Provider>(NetworkContextName)
   return context.active ? context : contextNetwork
