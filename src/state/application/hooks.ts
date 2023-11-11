@@ -13,9 +13,12 @@ export function useBlockNumber(): number | undefined {
 export function useWalletModalOpen(): boolean {
   return useSelector((state: AppState) => state.application.walletModalOpen)
 }
-
+// 
+// 导出一个函数，用于切换钱包模态框
 export function useWalletModalToggle(): () => void {
+  // 获取dispatch函数 触发action 函数
   const dispatch = useDispatch()
+  // 使用useCallback函数，当dispatch函数发生变化时，调用toggleWalletModal函数
   return useCallback(() => dispatch(toggleWalletModal()), [dispatch])
 }
 

@@ -121,7 +121,8 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
 
   return <StyledComponentsThemeProvider theme={themeObject}>{children}</StyledComponentsThemeProvider>
 }
-
+// 使用 styled 组件创建了一个名为 TextWrapper 的组件，它继承了 Text 组件，并为该组件添加了一些样式。
+// 并使用 <{ color: keyof Colors }> 限制了该组件可以使用的属性。这意味着该组件只能使用 Colors 对象中定义的属性作为 color 属性。
 const TextWrapper = styled(Text)<{ color: keyof Colors }>`
   color: ${({ color, theme }) => (theme as any)[color]};
 `
