@@ -1,11 +1,9 @@
 // the Uniswap Default token list lives here
 // export const DEFAULT_TOKEN_LIST_URL = 'tokens.uniswap.eth'
 // export const DEFAULT_TOKEN_LIST_URL = 'https://app.tryroll.com/tokens.json'
-<<<<<<< HEAD
+
 export const DEFAULT_TOKEN_LIST_URL = 'https://app.tryroll.com/tokens.json'
-=======
-export const DEFAULT_TOKEN_LIST_URL = ''
->>>>>>> 13804055ef74b5e1ebc6c55aa15040b2722db8b5
+
 // import TOKENLIST from './tokenlist.json'
 
 
